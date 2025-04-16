@@ -1,5 +1,6 @@
 import Login from "./pages/login"
 
+
 function App() {
  
 
@@ -7,7 +8,10 @@ function App() {
 
   return (
     <>
+      
       <Login/>
+
+
     </>
   )
 }

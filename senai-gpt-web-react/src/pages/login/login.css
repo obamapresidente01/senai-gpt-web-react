@@ -1,0 +1,44 @@
+.page-container {
+
+    display: flex;
+ 
+ 
+ }
+ 
+ h1 {
+ 
+    font-size: 76px;
+    font-family: "inter";
+    font-weight: normal;
+    margin-bottom: 16px;
+ 
+ }
+ /* <h1 class="titulo">Login</h1> */
+ .login-container {
+ 
+ display: flex; /*deixa em colunas*/
+ flex-direction: column; /*horizontal*/
+ align-items: center; /*horizontal*/
+ justify-content: center;
+ height: 100vh;
+ width: 50vw;
+ 
+ }
+ 
+ .logo {
+ 
+    height: 60px;
+ 
+ }
+ 
+ .robo-image { 
+ 
+    background-image: url("../.vscode/assets/imgs/robo-image.jpg");
+    background-size: cover;
+    /* background-size: contain; */
+    /* background-repeat: no-repeat; */
+    width: 50vw;
+    height: 100vh;
+ }
+ 
+ 
