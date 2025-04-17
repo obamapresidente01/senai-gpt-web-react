@@ -33,7 +33,7 @@
  
  .robo-image { 
  
-    background-image: url("../.vscode/assets/imgs/robo-image.jpg");
+    background-image: url("../../assets/imgs/robo-image.jpg");
     background-size: cover;
     /* background-size: contain; */
     /* background-repeat: no-repeat; */
