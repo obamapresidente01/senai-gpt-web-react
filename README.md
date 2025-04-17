@@ -14,3 +14,4 @@ npm run dev (entrar no link do site).
 6. Coloque o seu projeto e no vs code substitua o powershell pro git bash.
 7. Abra o terminal e coloque npm install e npm run dev.
 8. http cats e http status codes (para erros)
+9. para teste.
