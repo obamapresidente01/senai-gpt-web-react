@@ -40,3 +40,6 @@ npm run dev (entrar no link do site).
    - JSON Stringify que pega o email e senha e converte em uma string json antes de ser enviado.
    - LocalStorage para armazenar o valor no armazenamento local do navegador
    - OnChange serve para o usuário digitar algo e chamar a função para atualizar o valor da variável email com o que foi digitado.
+  
+5. ![image](https://github.com/user-attachments/assets/6bf152bd-9565-4de8-a236-59eda47f3c21)
+
