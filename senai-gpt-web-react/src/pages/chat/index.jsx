@@ -64,6 +64,13 @@ function Chat() {
 
     }
 
+    const onLogOutClick = () => {
+
+        localStorage.clear();
+        window.location.href = "/login";
+        
+    }
+
 
     return (
         <>
@@ -109,7 +116,7 @@ function Chat() {
                             <img src={UpdateFAQ} alt="atualizacoes" />
 
                             Updates & FAQ </button>
-                        <button className="btn">
+                        <button className="btn" onClick={() => onLogOutClick()}>
 
                             <img src={Logout} alt="Sair da Conta" />
 
