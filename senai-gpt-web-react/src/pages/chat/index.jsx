@@ -19,11 +19,12 @@ import { useEffect, useState } from "react";
 
 function Chat() {
 
-      const [chats, setChats] = useState ([]);
+    const [chats, setChats] = useState([]);
+    const [chatSelecionado, setChatSelelcionado] = useState(null);
 
     useEffect(() => {
         //Exeecuta toda vez que a tela abre.
-      
+
 
         getChats();
 
@@ -36,17 +37,17 @@ function Chat() {
         //Arrow Function
         let response = await fetch("https://senai-gpt-api.azurewebsites.net/chats", {
             headers: {
-                "Authorization" : "Bearer " + localStorage.getItem("meuToken")
+                "Authorization": "Bearer " + localStorage.getItem("meuToken")
             }
 
         });
 
         console.log(response);
 
-        if (response.ok == true){ 
+        if (response.ok == true) {
 
             let json = await response.json(); // Pegue as informacoes dos chats.
-            
+
             setChats(json);
 
 
@@ -56,6 +57,7 @@ function Chat() {
             if (response.status == 401) {
 
                 alert("Token Invalido. Faca login novamente.");
+                localStorage.clear();
                 window.location.href = "/login";
             }
         }
@@ -68,7 +70,13 @@ function Chat() {
 
         localStorage.clear();
         window.location.href = "/login";
-        
+
+    }
+    const clickChat = (chat) => {
+
+        setChatSelelcionado(chat);
+        console.log(chat);
+
     }
 
 
@@ -82,18 +90,18 @@ function Chat() {
                     <div className="top">
 
                         <button className="btn-new-chat"> + New Chat </button>
-                     
-                     {chats.map(chat => (
 
-                         <button className="btn">
-                        <img src={Balloon} alt=" balao de chat" />
+                        {chats.map(chat => (
+
+                            <button className="btn" onClick={() => clickChat(chat)}>
+                                <img src={Balloon} alt=" balao de chat" />
 
 
-                       {chat.chatTitle} </button>
+                                {chat.chatTitle} </button>
 
-                     ))}
+                        ))}
 
-                         </div>
+                    </div>
                     <div className="bottom">
 
                         <button className="btn">
@@ -128,42 +136,54 @@ function Chat() {
 
                 <main className="central-painel">
 
-                    <img className="logo-chat" src={LogoDoSenaiGPT} alt="Logo do SenaiGPT" />
+                    {chatSelecionado == null && (
 
-                    <div className="pai-dos-textos">
+                        <>
 
-                        <div className="exemples">
-                            <img src={ChatBalloon} alt="balao" />
-                            <h3> Examples </h3> <br />
-                            <p> "Explain quantum computing insimple <br /> terms" </p> <br />
-                            <p> "Got any creative ideas for a 10year <br /> old's birthday?" </p> <br />
-                            <p> "How do I make an HTTP requestin <br /> Javascript?" </p> <br />
-                        </div>
+                            <img className="logo-chat" src={LogoDoSenaiGPT} alt="Logo do SenaiGPT" />
 
-                        <div className="capacibilities">
-                            <img src={Star} alt="estrelas" />
-                            <h3> Capacibilities </h3> <br />
-                            <p> Remembers what user saidearlier in <br /> the conversation. </p> <br />
-                            <p> Allows user to provide follow-up <br /> corrections. </p> <br />
-                            <p> Trained to decline inappropriate <br /> requests. </p> <br />
-                        </div>
+                            <div className="pai-dos-textos">
 
-                        <div className="limitations">
-                            <img src={Limitation} alt="escudo de aviso" />
-                            <h3>Limitations</h3> <br />
-                            <p>May occasionally generate incorrect <br /> information.</p> <br />
-                            <p>May occasionally produce harmful <br /> instructions or biased content.</p> <br />
-                            <p>Limited knowledge of world andevents <br /> after 2021.</p> <br />
-                        </div>
-                    </div>
+                                <div className="exemples">
+                                    <img src={ChatBalloon} alt="balao" />
+                                    <h3> Examples </h3> <br />
+                                    <p> "Explain quantum computing insimple <br /> terms" </p> <br />
+                                    <p> "Got any creative ideas for a 10year <br /> old's birthday?" </p> <br />
+                                    <p> "How do I make an HTTP requestin <br /> Javascript?" </p> <br />
+                                </div>
+
+                                <div className="capacibilities">
+                                    <img src={Star} alt="estrelas" />
+                                    <h3> Capacibilities </h3> <br />
+                                    <p> Remembers what user saidearlier in <br /> the conversation. </p> <br />
+                                    <p> Allows user to provide follow-up <br /> corrections. </p> <br />
+                                    <p> Trained to decline inappropriate <br /> requests. </p> <br />
+                                </div>
+
+                                <div className="limitations">
+                                    <img src={Limitation} alt="escudo de aviso" />
+                                    <h3>Limitations</h3> <br />
+                                    <p>May occasionally generate incorrect <br /> information.</p> <br />
+                                    <p>May occasionally produce harmful <br /> instructions or biased content.</p> <br />
+                                    <p>Limited knowledge of world andevents <br /> after 2021.</p> <br />
+                                </div>
+                            </div>
+
+
+                        </>
+
+
+                    )}
+
+
 
                     <div className="input-container">
-                    <input className="input" type="text"
-                        placeholder="Type message" />
+                        <input className="input" type="text"
+                            placeholder="Type message" />
 
-                    <img className="aviaopapel" src={PaperPlane} alt="Enviar" />
-                    <img className="microfone" src={Microphone} alt="Microfone" />
-                    <img className="iconimage" src={Image} alt="Enviar Imagem" />
+                        <img className="aviaopapel" src={PaperPlane} alt="Enviar" />
+                        <img className="microfone" src={Microphone} alt="Microfone" />
+                        <img className="iconimage" src={Image} alt="Enviar Imagem" />
 
                     </div>
 

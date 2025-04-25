@@ -5,6 +5,21 @@ import Chat from "./pages/chat"
 
 
 function App() {
+
+  const isAuthenticated = () => {
+
+    let token = localStorage.getItem("meuToken");
+
+    if (token == null) {
+
+      return false;
+      
+    } else { 
+
+      return true;
+
+    }
+  }
  
 
   //JavaScript
@@ -18,7 +33,7 @@ function App() {
 
           <Route path="/" element={<Login/>}> </Route>
           <Route path="/login" element={<Login/>}> </Route>
-          <Route path="/chat" element={<Chat/>}></Route>
+          <Route path="/chat" element={isAuthenticated() == true? <Chat/> : <h1>Not Found</h1>}></Route>
           <Route path="*" element={<h1>Not Found</h1>}> </Route>
           
 
