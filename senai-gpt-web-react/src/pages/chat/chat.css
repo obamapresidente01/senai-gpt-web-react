@@ -107,6 +107,15 @@ p {
     
 }
 
+.input-container-1 input {
+
+    border: none;
+    padding: 20px;
+    background-color: transparent;
+    width: 40vw;
+
+}
+
 .input-container {
 
     position: relative;
@@ -150,5 +159,40 @@ height: 20px;
 
 .limitations img{
     margin-left: 160px;
+
+}
+
+
+.chat-header {
+
+    margin-bottom: 20px;
+
+}
+
+.chat-messages {
+
+    width: 100%;
+
+}
+
+.chat-container .message-item {
+
+    background-color: #ccc;
+    border-radius: 12px 12px 0 12px;
+    padding: 20px;
+    width: 300px;
+    margin-left: auto;
+
+}
+
+.chat-container .message-item.chatbot {
+
+    background-color: #ccc;
+    border-radius: 12px 12px 12px 0px;
+    padding: 20px;
+    width: 300px;
+    margin-left: unset;
+    color: white;
+    background: #000;
 
 }

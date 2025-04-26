@@ -14,17 +14,23 @@ import PaperPlane from "../../assets/imgs/PaperPlaneRight.png"
 import Microphone from "../../assets/imgs/microphone-solid.svg"
 import Image from "../../assets/imgs/image-solid.svg"
 import { useEffect, useState } from "react";
+// import { send } from "vite";
+
+
 
 
 
 function Chat() {
 
     const [chats, setChats] = useState([]);
-    const [chatSelecionado, setChatSelelcionado] = useState(null);
+    const [chatSelecionado, setChatSelecionado] = useState(null);
+    const [userMessage, setUserMessage] = useState("")
+    
 
     useEffect(() => {
         //Exeecuta toda vez que a tela abre.
 
+       
 
         getChats();
 
@@ -51,7 +57,7 @@ function Chat() {
             setChats(json);
 
 
-            //
+            
         } else {
 
             if (response.status == 401) {
@@ -74,10 +80,76 @@ function Chat() {
     }
     const clickChat = (chat) => {
 
-        setChatSelelcionado(chat);
+        setChatSelecionado(chat);
         console.log(chat);
 
     }
+
+    const chatGPT = async (message) => {
+
+
+            // Configurações do endpoint e chave da API
+            const endpoint = "https://ai-testenpl826117277026.openai.azure.com/";
+            const apiKey = "DCYQGY3kPmZXr0lh7xeCSEOQ5oiy1aMlN1GeEQd5G5cXjuLWorWOJQQJ99BCACYeBjFXJ3w3AAAAACOGol8N";
+            const deploymentId = "gpt-4"; // Nome do deployment no Azure OpenAI
+            const apiVersion = "2024-05-01-preview"; // Verifique a versão na documentação
+    
+            // URL para a chamada da API
+            const url = `${endpoint}/openai/deployments/${deploymentId}/chat/completions?api-version=${apiVersion}`;
+    
+            // Configurações do corpo da requisição
+            const data = {
+                messages: [{ role: "user", content: message }],
+                max_tokens: 50
+            };
+    
+            // Cabeçalhos da requisição
+            const headers = {
+                "Content-Type": "application/json",
+                "api-key": apiKey
+            };
+    
+            // Faz a requisição com fetch
+            const response = await fetch(url, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(data)
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                const botMessage = result.choices[0].message.content;
+                return botMessage;
+            }
+    
+        }
+
+
+    const enviarMensagem = async (message) => {
+
+        let resposta = await chatGPT(message);
+
+        console.log("Resposta: ", resposta)
+
+        const novaMensagemUsuario= {
+
+            userId: "",
+            text: message,
+            id: 10
+
+        };
+
+    let novaRespostaChatGPT = {
+        userId: "chatbot",
+        text: resposta,
+        id: 10
+
+
+    }
+
+
+    }
+
 
 
     return (
@@ -175,15 +247,55 @@ function Chat() {
 
                     )}
 
+                    {chatSelecionado != null && (
+
+                            <>
+
+                            <div className="chat-container"> 
+
+                                <div className="chat-header">
+
+                                    <h2> {chatSelecionado.chatTitle} </h2>
+
+                                </div>
+
+                                <div className="chat-messages">
+
+                                    {chatSelecionado.messages.map(message => (
+
+                                        <p className={"message-item " + (message.userId == "chatbot"? "chatbot" : "")}>{message.text}</p>
+
+                                    ))}
+
+                                </div>
+                            </div>
+
+
+                            </>
+
+                    )}
+
+                   
+
 
 
                     <div className="input-container">
-                        <input className="input" type="text"
-                            placeholder="Type message" />
 
-                        <img className="aviaopapel" src={PaperPlane} alt="Enviar" />
+                        <input className="input"
+                        value={userMessage}
+                        onChange={event => setUserMessage(event.target.value)}
+                        type="text"
+                        placeholder="Type message" />
+
+                        <img onClick={() => enviarMensagem(userMessage)} src={PaperPlane}
+                        alt="Send." />
+                        
+
+                        {/* <img className="aviaopapel" src={PaperPlane} alt="Enviar" /> */}
                         <img className="microfone" src={Microphone} alt="Microfone" />
                         <img className="iconimage" src={Image} alt="Enviar Imagem" />
+
+                       
 
                     </div>
 
