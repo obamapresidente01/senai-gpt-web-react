@@ -48,7 +48,7 @@ function Chat() {
 
         });
 
-        console.log(response);
+   
 
         if (response.ok == true) {
 
@@ -87,68 +87,100 @@ function Chat() {
 
     const chatGPT = async (message) => {
 
+        // Configurações do endpoint e chave da API
+        const endpoint = "https://ai-testenpl826117277026.openai.azure.com/";
+        const apiKey = "DCYQGY3kPmZXr0lh7xeCSEOQ5oiy1aMlN1GeEQd5G5cXjuLWorWOJQQJ99BCACYeBjFXJ3w3AAAAACOGol8N";
+        const deploymentId = "gpt-4"; // Nome do deployment no Azure OpenAI
+        const apiVersion = "2024-05-01-preview"; // Verifique a versão na documentação
 
-            // Configurações do endpoint e chave da API
-            const endpoint = "https://ai-testenpl826117277026.openai.azure.com/";
-            const apiKey = "DCYQGY3kPmZXr0lh7xeCSEOQ5oiy1aMlN1GeEQd5G5cXjuLWorWOJQQJ99BCACYeBjFXJ3w3AAAAACOGol8N";
-            const deploymentId = "gpt-4"; // Nome do deployment no Azure OpenAI
-            const apiVersion = "2024-05-01-preview"; // Verifique a versão na documentação
-    
-            // URL para a chamada da API
-            const url = `${endpoint}/openai/deployments/${deploymentId}/chat/completions?api-version=${apiVersion}`;
-    
-            // Configurações do corpo da requisição
-            const data = {
-                messages: [{ role: "user", content: message }],
-                max_tokens: 50
-            };
-    
-            // Cabeçalhos da requisição
-            const headers = {
-                "Content-Type": "application/json",
-                "api-key": apiKey
-            };
-    
-            // Faz a requisição com fetch
-            const response = await fetch(url, {
-                method: "POST",
-                headers: headers,
-                body: JSON.stringify(data)
-            });
-    
-            if (response.ok) {
-                const result = await response.json();
-                const botMessage = result.choices[0].message.content;
-                return botMessage;
-            }
-    
+        // URL para a chamada da API
+        const url = `${endpoint}/openai/deployments/${deploymentId}/chat/completions?api-version=${apiVersion}`;
+
+        // Configurações do corpo da requisição
+        const data = {
+            messages: [{ role: "user", content: message }],
+            max_tokens: 50
+        };
+
+        // Cabeçalhos da requisição
+        const headers = {
+            "Content-Type": "application/json",
+            "api-key": apiKey
+        };
+
+        // Faz a requisição com fetch
+        const response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            const botMessage = result.choices[0].message.content;
+            return botMessage;
         }
+
+    }
 
 
     const enviarMensagem = async (message) => {
 
-        let resposta = await chatGPT(message);
+        let userId = localStorage.getItem("meuId");
 
-        console.log("Resposta: ", resposta)
+        let novaMensagemUsuario = {
 
-        const novaMensagemUsuario= {
-
-            userId: "",
             text: message,
-            id: 10
+            id: crypto.randomUUID(),
+            userId: userId
 
         };
 
-    let novaRespostaChatGPT = {
-        userId: "chatbot",
-        text: resposta,
-        id: 10
+        let novoChatSelecionado = { ...chatSelecionado }; //pega as 4 propriedades, faz uma cópia do chatSelecionado
+        novoChatSelecionado.messages.push(novaMensagemUsuario);
+        setChatSelecionado(novoChatSelecionado);
+
+        let respostaGPT = await chatGPT(message);
+
+        let novaMensagemGPT = {
+
+            text: respostaGPT,
+            id:crypto.randomUUID(),
+            userId: "chatbot"
+
+        };
+
+        novoChatSelecionado = { ...chatSelecionado }; 
+        novoChatSelecionado.messages.push(novaMensagemGPT);
+        setChatSelecionado(novoChatSelecionado);
+        
 
 
-    }
+
+    } 
+
+    //     let resposta = await chatGPT(message);
+
+    //     console.log("Resposta: ", resposta)
+
+    //     const novaMensagemUsuario= {
+
+    //         userId: "",
+    //         text: message,
+    //         id: 10
+
+    //     };
+
+    // let novaRespostaChatGPT = {
+    //     userId: "chatbot",
+    //     text: resposta,
+    //     id: 10
 
 
-    }
+    // }
+
+
+    // }
 
 
 
@@ -164,13 +196,10 @@ function Chat() {
                         <button className="btn-new-chat"> + New Chat </button>
 
                         {chats.map(chat => (
-
                             <button className="btn" onClick={() => clickChat(chat)}>
-                                <img src={Balloon} alt=" balao de chat" />
-
-
-                                {chat.chatTitle} </button>
-
+                                <img src={Balloon} alt="ícone de chat." />
+                                {chat.chatTitle}
+                            </button>
                         ))}
 
                     </div>
@@ -261,10 +290,8 @@ function Chat() {
 
                                 <div className="chat-messages">
 
-                                    {chatSelecionado.messages.map(message => (
-
-                                        <p className={"message-item " + (message.userId == "chatbot"? "chatbot" : "")}>{message.text}</p>
-
+                                {chatSelecionado.messages.map(message => (
+                                        <p className={"message-item " + (message.userId == "chatbot" ? "chatbot" : "")}>{message.text}</p>
                                     ))}
 
                                 </div>
