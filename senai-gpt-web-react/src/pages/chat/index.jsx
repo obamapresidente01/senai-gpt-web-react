@@ -150,14 +150,71 @@ function Chat() {
 
         };
 
-        novoChatSelecionado = { ...chatSelecionado }; 
+        
         novoChatSelecionado.messages.push(novaMensagemGPT);
         setChatSelecionado(novoChatSelecionado);
-        
 
+           // Salva o chat atualizado no back-end
+           let response = await fetch(
+            `https://senai-gpt-api.azurewebsites.net/chats/${chatSelecionado.id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("meuToken")
+                },
+                body: JSON.stringify(novoChatSelecionado)
+            }
+        );
 
+        if (response.ok) {
+            console.log("Chat atualizado com sucesso.");
+        } else {
+            console.log("Erro ao atualizar o chat.");
+        }
 
-    } 
+        setUserMessage("");
+        await getChats();
+
+    }
+
+    const criarNovoChat = async () => {
+
+        let novoTitulo = prompt ("Insira o titulo do chat:");
+
+        if (novoTitulo == null || novoTitulo == "") {
+
+            alert ("Insira um Titulo.");
+            return;
+     }
+
+            let userId = localStorage.getItem("meuId")
+            
+         let criarNovoChat = {
+            chatTitle: novoTitulo,
+            id: crypto.randomUUID(),
+            userId: userId,
+            messages: []
+        };
+    
+        let response = await fetch("https://senai-gpt-api.azurewebsites.net/chats", {
+            method: "POST",
+            headers: {
+                "Authorization" : "Bearer " + localStorage.getItem("meuToken"),
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(criarNovoChat)
+        });
+    
+        if (response.ok) {
+            
+        await getChats();
+
+        }
+
+    }
+
+    
 
     //     let resposta = await chatGPT(message);
 
@@ -193,7 +250,7 @@ function Chat() {
 
                     <div className="top">
 
-                        <button className="btn-new-chat"> + New Chat </button>
+                    <button className="btn-new-chat" onClick={() => criarNovoChat()}> + New Chat </button>
 
                         {chats.map(chat => (
                             <button className="btn" onClick={() => clickChat(chat)}>
