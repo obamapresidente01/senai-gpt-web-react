@@ -41,7 +41,7 @@ function Chat() {
 
     const getChats = async () => {
         //Arrow Function
-        let response = await fetch("https://senai-gpt-api.azurewebsites.net/chats", {
+        let response = await fetch( "https://senai-gpt-api.up.railway.app/chats", {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("meuToken")
             }
@@ -53,6 +53,10 @@ function Chat() {
         if (response.ok == true) {
 
             let json = await response.json(); // Pegue as informacoes dos chats.
+
+            let userId = localStorage.getItem("meuId")
+
+            json = json.filter(chat => chat.userId == userId)
 
             setChats(json);
 
@@ -86,6 +90,8 @@ function Chat() {
     }
 
     const chatGPT = async (message) => {
+
+        return "[Fora do Ar]";
 
         // Configurações do endpoint e chave da API
         const endpoint = "https://ai-testenpl826117277026.openai.azure.com/";
@@ -156,7 +162,7 @@ function Chat() {
 
            // Salva o chat atualizado no back-end
            let response = await fetch(
-            `https://senai-gpt-api.azurewebsites.net/chats/${chatSelecionado.id}`,
+            `https://senai-gpt-api.up.railway.app/users/${chatSelecionado.id}`,
             {
                 method: "PUT",
                 headers: {
@@ -197,7 +203,7 @@ function Chat() {
             messages: []
         };
     
-        let response = await fetch("https://senai-gpt-api.azurewebsites.net/chats", {
+        let response = await fetch("https://senai-gpt-api.up.railway.app/users", {
             method: "POST",
             headers: {
                 "Authorization" : "Bearer " + localStorage.getItem("meuToken"),

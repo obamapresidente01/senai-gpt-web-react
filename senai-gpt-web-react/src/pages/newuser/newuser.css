@@ -31,24 +31,24 @@
  
  }
  
- .robo-image { 
+ .tech-image { 
  
-   background-image: url("../../assets/imgs/robo-image.jpg");
-   background-size: cover;
-   /* background-size: contain; */
-   /* background-repeat: no-repeat; */
-   width: 50vw;
-   height: 100vh;
-}
+    background-image: url("../../assets/imgs/newuserwallpaper.jpg");
+    background-size: cover;
+    /* background-size: contain; */
+    /* background-repeat: no-repeat; */
+    width: 50vw;
+    height: 100vh;
+ }
 
-.form-hint {
-
-
-   font-family: "inter";
-   font-weight: normal;
-   margin-top: 20px;
+ 
+ .form-hint {
 
 
-}
+    font-family: "inter";
+    font-weight: normal;
+    margin-top: 20px;
  
  
+ }
+  
