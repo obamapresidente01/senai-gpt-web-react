@@ -26,6 +26,7 @@ function Chat() {
     const [chatSelecionado, setChatSelecionado] = useState(null);
     const [userMessage, setUserMessage] = useState("")
     
+    const [isLeftPainelOpen, setIsLeftPainelOpen] = useState(false);
 
     useEffect(() => {
         //Exeecuta toda vez que a tela abre.
@@ -251,8 +252,19 @@ function Chat() {
         <>
 
             <div className="container">
+                {/* toggle button */}
 
-                <header className="left-painel">
+            <button 
+            className="btn-toggle-painel"
+            onClick={() => setIsLeftPainelOpen(true)}
+
+            
+            >
+
+                ☰
+
+            </button>
+                <header className={`left-painel ${isLeftPainelOpen == true ? "open" : ""}`}>
 
                     <div className="top">
 

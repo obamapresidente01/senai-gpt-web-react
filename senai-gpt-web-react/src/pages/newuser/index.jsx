@@ -101,7 +101,7 @@ function NewUser() {
   
           </div>
   
-          <div className="login-container">
+          <div className="cadastro-container">
   
   
             <img className="logo" src={logo} alt="Logo do SenaiGPT" />
@@ -120,6 +120,8 @@ function NewUser() {
               placeholder="Insira a senha" />
   
             <button className="botao-entrar" onClick={() => OnNewUserClick()}>Entrar</button>
+
+            <br />
 
             <a className="form-hint" href="/login"> Clique aqui para fazer o login </a>
   

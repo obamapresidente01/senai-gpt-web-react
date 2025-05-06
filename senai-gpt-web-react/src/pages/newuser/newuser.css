@@ -14,7 +14,7 @@
  
  }
  /* <h1 class="titulo">Login</h1> */
- .login-container {
+ .cadastro-container {
  
  display: flex; /*deixa em colunas*/
  flex-direction: column; /*horizontal*/
@@ -52,3 +52,20 @@
  
  }
   
+ @media screen and (max-width: 768px) {
+
+   /* celular */
+
+   .tech-image {
+
+      display: none;
+   }
+
+   .cadastro-container {
+
+      width: 100vw;
+
+   }
+
+   
+}
