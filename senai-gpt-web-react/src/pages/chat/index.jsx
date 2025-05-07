@@ -86,7 +86,7 @@ function Chat() {
     const clickChat = (chat) => {
 
         setChatSelecionado(chat);
-        console.log(chat);
+        setIsLeftPainelOpen(false);
 
     }
 
@@ -256,7 +256,7 @@ function Chat() {
 
             <button 
             className="btn-toggle-painel"
-            onClick={() => setIsLeftPainelOpen(true)}
+            onClick={() => setIsLeftPainelOpen(!isLeftPainelOpen)}
 
             
             >

@@ -214,12 +214,20 @@ height: 20px;
 
 }
 
+.btn-toggle-painel {
+
+    display: none;
+
+}
+
 @media screen and (max-width: 768px) {
 
     /* celular */
  .left-painel {
 
     display: none;
+
+    max-height: 90vh;
 
  }
 
@@ -238,10 +246,13 @@ height: 20px;
  .central-painel {
 
     width: 100vw;
+    max-height: 90vh;
 
  }
 
  .btn-toggle-painel {
+
+    display: block;
 
     z-index: 2;
     width: 50px;
@@ -259,5 +270,33 @@ height: 20px;
     background-color: white;
 
  }
+
+.logo-chat {
+
+    width: 70vw
+}
+
+.input-container-1 input {
+    width: 100%;
+  }
+
+  .input {
+    width: 85vw;
+  }
+
+  .exemples img, .capacibilities img, .limitations img {
+    width: 32px; 
+    margin-left: 0;
+
+  }
+
+  .pai-dos-textos {
+    justify-content: center;
+    gap: 5px;
+    max-width: 80px;
+
+  }
+
+  
 
 }
