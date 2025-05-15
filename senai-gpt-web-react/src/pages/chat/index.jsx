@@ -13,7 +13,9 @@ import Limitation from "../../assets/imgs/ShieldWarning.png"
 import PaperPlane from "../../assets/imgs/PaperPlaneRight.png"
 import Microphone from "../../assets/imgs/microphone-solid.svg"
 import Image from "../../assets/imgs/image-solid.svg"
+import BalloonWhite from "../../assets/imgs/ChatText-white.png"
 import { useEffect, useState } from "react";
+
 // import { send } from "vite";
 
 
@@ -28,12 +30,20 @@ function Chat() {
     
     const [isLeftPainelOpen, setIsLeftPainelOpen] = useState(false);
 
+    const [darkMode, setDarkMode] = useState(false);
+
     useEffect(() => {
         //Exeecuta toda vez que a tela abre.
 
        
 
         getChats();
+
+        let modoEscuro = localStorage.getItem("darkMode");
+        if (modoEscuro === "true") {
+            setDarkMode(true);
+            document.body.classList.add("dark-mode");
+        }
 
 
 
@@ -246,6 +256,24 @@ function Chat() {
 
     // }
 
+    const ToggleDarkMode = () => {
+
+        setDarkMode(!darkMode); //inverter valor do dark mode.
+
+        if (darkMode == true) {
+
+            document.body.classList.remove("dark-mode");
+
+        } else {
+
+            document.body.classList.add("dark-mode");
+
+        }
+
+        localStorage.setItem("darkMode", !darkMode); 
+
+    }
+
 
 
     return (
@@ -272,7 +300,7 @@ function Chat() {
 
                         {chats.map(chat => (
                             <button className="btn" onClick={() => clickChat(chat)}>
-                                <img src={Balloon} alt="ícone de chat." />
+                                <img src={darkMode == true? BalloonWhite : Balloon} alt="ícone de chat." />
                                 {chat.chatTitle}
                             </button>
                         ))}
@@ -285,7 +313,7 @@ function Chat() {
                             <img src={Trash} alt="lixeira" />
 
                             Clear Conversations </button>
-                        <button className="btn">
+                        <button className="btn" onClick={() => ToggleDarkMode()}>
 
                             <img src={LightMode} alt="Mudar Modo" />
 
